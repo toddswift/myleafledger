@@ -45,10 +45,8 @@ def AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, fi
     print("Adding a new cigar review...")
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
-
-    insert_query = INSERT_QUERY
-    
-    cursor.execute(insert_query, (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags))
+  
+    cursor.execute(INSERT_QUERY, (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags))
     
     connection.commit()
     cursor.close()
