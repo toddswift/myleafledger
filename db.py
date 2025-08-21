@@ -1,5 +1,5 @@
 import sqlite3
-from constants import DATABASE_NAME, CREATE_QUERY
+from constants import DATABASE_NAME, CREATE_QUERY, INSERT_QUERY
 
 def InitializeDatabase(): 
     print("Initializing database...")
@@ -46,9 +46,7 @@ def AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, fi
     connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
 
-    insert_query = """INSERT INTO cigar_reviews 
-                      (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+    insert_query = INSERT_QUERY
     
     cursor.execute(insert_query, (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags))
     

@@ -23,3 +23,7 @@ CREATE_QUERY = """ CREATE TABLE IF NOT EXISTS
     updated_at    TEXT    NOT NULL DEFAULT (datetime('now'))
     )
     """
+
+INSERT_QUERY = """INSERT INTO cigar_reviews 
+    (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""

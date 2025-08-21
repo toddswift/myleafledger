@@ -17,7 +17,7 @@ def main_menu():
         choice = input("Enter your choice: ")
         
         if choice == '1':
-            print("You selected Option 1")
+            print("You selected Option 1 to Add a Cigar Review")
             brand = input("Enter brand: ")
             line = input("Enter line: ")
             vitola = input("Enter vitola: ")
