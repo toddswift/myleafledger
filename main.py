@@ -1,46 +1,56 @@
-import sqlite3
+import sys
+from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview
 from constants import DATABASE_NAME, CREATE_QUERY
 
 
-def main():
+def main_menu():
     print("Starting MyLeafLedger")
 
-    print("Establishing database connection...")
-    # define database connection
-    connection = sqlite3.connect(DATABASE_NAME)
+    InitializeDatabase()    # Ensure the database is initialized
+    while True: # this will keep the menu running until the user decides to exit or it crashes miserably
+        print("\n🚬 My Leaf Ledger - Cigar Review CLI Main Menu: 🚬")
+        print("1. Add a Cigar Review")
+        print("2. Edit a Cigar Review (coming soon...)")
+        print("3. View Reviews (coming soon...)")
+        print("4. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            print("You selected Option 1")
+            brand = input("Enter brand: ")
+            line = input("Enter line: ")
+            vitola = input("Enter vitola: ")
+            ring_gauge = input("Enter ring gauge (in mm): ")
+            country = input("Enter country: ")
+            wrapper = input("Enter wrapper (optional): ")
+            binder = input("Enter binder (optional): ")
+            filler = input("Enter filler (optional): ")
+            date_smoked = input("Enter date smoked (YYYY-MM-DD): ")
+            rating = input("Enter rating (1-5): ")
+            notes = input("Enter notes (optional): ")
+            price_cents = input("Enter price in cents (optional): ")
+            humidor = input("Enter humidor location (optional): ")
+            tags = input("Enter tags (CSV, e.g. 'maduro,box-press') (optional): ")
+            
+            AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags)
 
-    print("Database connection established.")
-    # define cursor used to query the database and execute SQL commands
-    cursor = connection.cursor()
+            print(f"Review for {brand, line, vitola} added successfully!")   
 
-    # create the cigar_reviews table
-    command_create_db_if_exists = CREATE_QUERY
-
-    # execute the cursor to call the create table query (will not recreate if it already exists) - my first technical debt!
-    # todo:// check if table exists before creating
-    print("Executing command to create table if it does not exist...")
-    cursor.execute(command_create_db_if_exists)
-    print("Table creation command executed successfully.")
-    # commit the changes to the database
-    connection.commit()
-
-    # fetching all cigars from the cigar_reviews table 
-    print("Fetching all records from cigar_reviews table...")
-    cursor.execute("SELECT * FROM cigar_reviews")
-    records = cursor.fetchall()
-    print(f"Fetched {len(records)} records from cigar_reviews table.")  
-    print(records)  # print the fetched records
-    
- 
-    # close the cursor
-    cursor.close()
-
-    # close the connection
-    connection.close()
-    print("Database connection closed.")
-    print("Database operations completed successfully.")
-    
+        elif choice == '2':
+            print("You selected Option 2")
+            # Add functionality for Option 2 here
+        elif choice == '3':
+            print("You selected Option 3")
+            # Add functionality for Option 3 here
+        elif choice == '4':
+            print("Exiting MyLeafLedger. Goodbye!")
+            # close the database connection before exiting
+            CloseDatabaseConnection()
+            break
+        else:
+            print("Invalid choice. Please try again.")
     
 
 if __name__ == "__main__":
-    main()
+    main_menu()
