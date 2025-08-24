@@ -27,3 +27,11 @@ CREATE_QUERY = """ CREATE TABLE IF NOT EXISTS
 INSERT_QUERY = """INSERT INTO cigar_reviews 
     (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+
+# used by pandas dataframe to display all columns in the fetch all reviews option
+ALL_COLUMNS = [
+    'id', 'brand', 'line', 'vitola', 'ring_gauge', 'country', 'wrapper', 
+    'binder', 'filler', 'date_smoked', 
+    'rating', 'notes', 'price_cents', 'humidor', 'tags', 
+    'created_at', 'updated_at'
+]

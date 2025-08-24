@@ -1,6 +1,8 @@
 import sys
 from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview, FetchAllCigarReviews
+from constants import ALL_COLUMNS
 import pandas as pd
+import textwrap
 
 def main_menu():
     print("Starting MyLeafLedger")
@@ -65,17 +67,12 @@ def main_menu():
         elif choice == '3':
             print("You selected Option 3 to view Reviews")
             
-            COLUMNS = [
-                'id', 'brand', 'name', 'vitola', 'ring_gauge', 'wrapper_country', 
-                'binder_country', 'filler_country', 'origin_country', 'purchase_date', 
-                'rating', 'notes', 'price', 'purchase_location', 'length', 
-                'created_at', 'updated_at'
-            ]
-            
             records = FetchAllCigarReviews()
             if records:   
-                df = pd.DataFrame(records, columns=COLUMNS)
-                print(df)
+                pd.set_option ('display.max_columns', None)  # Show all columns
+                df = pd.DataFrame(records, columns=ALL_COLUMNS)
+                df['notes'] = df['notes'].apply(lambda x: '\n'.join(textwrap.wrap(str(x), width=50))) # wrap notes column only with this voodoo
+                print(df.to_string(index=False))
 
         elif choice == '4':
             print("Option 4 for Reports is coming soon!")
