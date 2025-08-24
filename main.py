@@ -10,9 +10,10 @@ def main_menu():
     while True: # this will keep the menu running until the user decides to exit or it crashes miserably
         print("\n🚬 My Leaf Ledger - Cigar Review CLI Main Menu: 🚬")
         print("1. Add a Cigar Review")
-        print("2. Edit a Cigar Review (coming soon...)")
-        print("3. View Reviews (coming soon...)")
-        print("4. Exit")
+        print("2. Edit a Cigar Review")
+        print("3. View Reviews")
+        print("4. Coming Soon... Reports")
+        print("5. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -70,6 +71,9 @@ def main_menu():
                 print(record)   
 
         elif choice == '4':
+            print("Option 4 for Reports is coming soon!")
+            
+        elif choice == '5':
             print("Exiting MyLeafLedger. Goodbye!")
             # close the database connection before exiting
             CloseDatabaseConnection()
@@ -77,6 +81,5 @@ def main_menu():
         else:
             print("Invalid choice. Please try again.")
     
-
 if __name__ == "__main__":
     main_menu()
