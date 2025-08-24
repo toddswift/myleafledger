@@ -53,4 +53,53 @@ def AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, fi
     connection.close()
     print("Cigar review added successfully.")
 
+def FetchAllCigarReviews():
+    print("Fetching all cigar reviews...")
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT * FROM cigar_reviews")
+    records = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    print(f"Fetched {len(records)} cigar reviews.")
+    return records
+
+def FetchCigarReviewById(id):
+    print(f"Fetching cigar review with ID {id}...")
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT * FROM cigar_reviews WHERE id = ?", (id,))
+    record = cursor.fetchone()
+    
+    cursor.close()
+    connection.close()
+    
+    if record:
+        print(f"Cigar review found: {record}")
+    else:
+        print(f"No cigar review found with ID {id}.")
+    
+    return record
+
+def UpdateCigarReview(id, brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags):
+    print(f"Updating cigar review with ID {id}...")
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    update_query = """UPDATE cigar_reviews 
+                      SET brand = ?, line = ?, vitola = ?, ring_gauge = ?, country = ?, wrapper = ?, binder = ?, filler = ?, 
+                          date_smoked = ?, rating = ?, notes = ?, price_cents = ?, humidor = ?, tags = ?, 
+                          updated_at = datetime('now')
+                      WHERE id = ?"""
+    
+    cursor.execute(update_query, (brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags, id))
+    
+    connection.commit()
+    cursor.close()
+    connection.close()
+    print(f"Cigar review with ID {id} updated successfully.")
     

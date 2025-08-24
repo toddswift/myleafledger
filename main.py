@@ -1,5 +1,5 @@
 import sys
-from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview
+from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview
 from constants import DATABASE_NAME, CREATE_QUERY
 
 
@@ -38,11 +38,37 @@ def main_menu():
             print(f"Review for {brand, line, vitola} added successfully!")   
 
         elif choice == '2':
-            print("You selected Option 2")
-            # Add functionality for Option 2 here
+            print("You selected Option 2 to Update a Cigar Review")
+            id = input("Enter the ID of the review to update: ")
+            record = FetchCigarReviewById(id)
+            if record:
+                print("Current review details:")
+                print(record)
+                brand = input("Enter new brand: ")
+                line = input("Enter new line: ")
+                vitola = input("Enter new vitola: ")
+                ring_gauge = input("Enter new ring gauge (in mm): ")
+                country = input("Enter new country: ")
+                wrapper = input("Enter new wrapper (optional): ")
+                binder = input("Enter new binder (optional): ")
+                filler = input("Enter new filler (optional): ")
+                date_smoked = input("Enter new date smoked (YYYY-MM-DD): ")
+                rating = input("Enter new rating (1-5): ")
+                notes = input("Enter new notes (optional): ")
+                price_cents = input("Enter new price in cents (optional): ")
+                humidor = input("Enter new humidor location (optional): ")
+                tags = input("Enter new tags (CSV, e.g. 'maduro,box-press') (optional): ")
+                
+                UpdateCigarReview(id, brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags)
+                print(f"Review with ID {id} updated successfully!")
+
         elif choice == '3':
-            print("You selected Option 3")
-            # Add functionality for Option 3 here
+            print("You selected Option 3 to view Reviews")
+            from db import FetchAllCigarReviews
+            records = FetchAllCigarReviews()
+            for record in records:
+                print(record)   
+
         elif choice == '4':
             print("Exiting MyLeafLedger. Goodbye!")
             # close the database connection before exiting
