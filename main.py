@@ -1,7 +1,6 @@
 import sys
-from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview
-from constants import DATABASE_NAME, CREATE_QUERY
-
+from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview, FetchAllCigarReviews
+import pandas as pd
 
 def main_menu():
     print("Starting MyLeafLedger")
@@ -65,14 +64,22 @@ def main_menu():
 
         elif choice == '3':
             print("You selected Option 3 to view Reviews")
-            from db import FetchAllCigarReviews
+            
+            COLUMNS = [
+                'id', 'brand', 'name', 'vitola', 'ring_gauge', 'wrapper_country', 
+                'binder_country', 'filler_country', 'origin_country', 'purchase_date', 
+                'rating', 'notes', 'price', 'purchase_location', 'length', 
+                'created_at', 'updated_at'
+            ]
+            
             records = FetchAllCigarReviews()
-            for record in records:
-                print(record)   
+            if records:   
+                df = pd.DataFrame(records, columns=COLUMNS)
+                print(df)
 
         elif choice == '4':
             print("Option 4 for Reports is coming soon!")
-            
+
         elif choice == '5':
             print("Exiting MyLeafLedger. Goodbye!")
             # close the database connection before exiting
