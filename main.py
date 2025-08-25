@@ -3,6 +3,7 @@ from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, Fetc
 from constants import ALL_COLUMNS
 import pandas as pd
 import textwrap
+from tabulate import tabulate
 
 def main_menu():
     print("Starting MyLeafLedger")
@@ -72,7 +73,8 @@ def main_menu():
                 pd.set_option ('display.max_columns', None)  # Show all columns
                 df = pd.DataFrame(records, columns=ALL_COLUMNS)
                 df['notes'] = df['notes'].apply(lambda x: '\n'.join(textwrap.wrap(str(x), width=50))) # wrap notes column only with this voodoo
-                print(df.to_string(index=False))
+                pd.set_option('display.max_colwidth', None)
+                print(tabulate(df, headers=ALL_COLUMNS, tablefmt='simple', showindex=False, maxcolwidths=[10] * len(ALL_COLUMNS)))  # None for unlimited, or e.g., 50 for 'notes'
 
         elif choice == '4':
             print("Option 4 for Reports is coming soon!")
