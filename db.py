@@ -67,6 +67,18 @@ def FetchAllCigarReviews():
     print(f"Fetched {len(records)} cigar reviews.")
     return records
 
+def DeleteCigarReview(id):
+    print(f"Deleting cigar review with ID {id}...")
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
+    
+    cursor.execute("DELETE FROM cigar_reviews WHERE id = ?", (id,))
+    
+    connection.commit()
+    cursor.close()
+    connection.close()
+    print(f"Cigar review with ID {id} deleted successfully.")
+    
 def FetchCigarReviewById(id):
     print(f"Fetching cigar review with ID {id}...")
     connection = sqlite3.connect(DATABASE_NAME)

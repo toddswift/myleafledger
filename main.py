@@ -1,5 +1,5 @@
 import sys
-from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview, FetchAllCigarReviews
+from db import InitializeDatabase, CloseDatabaseConnection, AddCigarReview, FetchCigarReviewById, UpdateCigarReview, FetchAllCigarReviews, DeleteCigarReview
 from constants import ALL_COLUMNS
 import pandas as pd
 import textwrap
@@ -15,7 +15,8 @@ def main_menu():
         print("2. Edit a Cigar Review")
         print("3. View Reviews")
         print("4. Coming Soon... Reports")
-        print("5. Exit")
+        print("5. Delete a Cigar Review")
+        print("6. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -80,6 +81,18 @@ def main_menu():
             print("Option 4 for Reports is coming soon!")
 
         elif choice == '5':
+            print("You selected Option 5 to Delete a Cigar Review")
+            id = input("Enter the ID of the review to delete: ")
+            record = FetchCigarReviewById(id)
+            if record:
+                confirm = input(f"Are you sure you want to delete the review with ID {id}? (yes/no): ")
+                if confirm.lower() == 'yes':
+                    DeleteCigarReview(id)
+                    print(f"Review with ID {id} deleted successfully!")
+                else:
+                    print("Deletion cancelled.")
+
+        elif choice == '6':
             print("Exiting MyLeafLedger. Goodbye!")
             # close the database connection before exiting
             CloseDatabaseConnection()
