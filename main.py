@@ -15,10 +15,11 @@ def main_menu():
         print("\n🚬 My Leaf Ledger - Cigar Review CLI Main Menu: 🚬")
         print("1. Add a Cigar Review")
         print("2. Edit a Cigar Review")
-        print("3. View Reviews")
-        print("4. Fancy Report")
-        print("5. Delete a Cigar Review")
-        print("6. Exit")
+        print("3. View All Reviews")
+        print("4. Query Reviews")
+        print("5. Fancy Report")
+        print("6. Delete a Cigar Review")
+        print("7. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -69,7 +70,7 @@ def main_menu():
                 print(f"Review with ID {id} updated successfully!")
 
         elif choice == '3':
-            print("You selected Option 3 to view Reviews")
+            print("You selected Option 3 to view All Reviews")
             
             records = FetchAllCigarReviews()
             if records:   
@@ -80,7 +81,14 @@ def main_menu():
                 print(tabulate(df, headers=ALL_COLUMNS, tablefmt='simple', showindex=False, maxcolwidths=[10] * len(ALL_COLUMNS)))  # None for unlimited, or e.g., 50 for 'notes'
 
         elif choice == '4':
-            print("Option 4 Fancy Report")
+            print("You selected Option 4 to Query Reviews")
+            print("Feature not implemented yet. Stay tuned!")
+
+
+
+
+        elif choice == '5':
+            print("Option 5 Fancy Report")
 
             records = FetchAllCigarReviews()
             if records:   
@@ -111,8 +119,8 @@ def main_menu():
             # Print the rich table
             console.print(table)
 
-        elif choice == '5':
-            print("You selected Option 5 to Delete a Cigar Review")
+        elif choice == '6':
+            print("You selected Option 6 to Delete a Cigar Review")
             id = input("Enter the ID of the review to delete: ")
             record = FetchCigarReviewById(id)
             if record:
@@ -123,7 +131,7 @@ def main_menu():
                 else:
                     print("Deletion cancelled.")
 
-        elif choice == '6':
+        elif choice == '7':
             print("Exiting MyLeafLedger. Goodbye!")
             # close the database connection before exiting
             CloseDatabaseConnection()
