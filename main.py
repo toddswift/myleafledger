@@ -6,6 +6,7 @@ import textwrap
 from tabulate import tabulate
 from rich.console import Console
 from rich.table import Table
+from validate import is_valid_date, is_valid_string, is_valid_integer
 
 def main_menu():
     print("Starting MyLeafLedger")
@@ -25,22 +26,140 @@ def main_menu():
         
         if choice == '1':
             print("You selected Option 1 to Add a Cigar Review")
-            brand = input("Enter brand: ")
-            line = input("Enter line: ")
-            vitola = input("Enter vitola: ")
-            ring_gauge = input("Enter ring gauge (in mm): ")
-            country = input("Enter country: ")
-            wrapper = input("Enter wrapper (optional): ")
-            binder = input("Enter binder (optional): ")
-            filler = input("Enter filler (optional): ")
-            date_smoked = input("Enter date smoked (YYYY-MM-DD): ")
-            rating = input("Enter rating (1-5): ")
-            notes = input("Enter notes (optional): ")
-            price_cents = input("Enter price in cents (optional): ")
-            humidor = input("Enter humidor location (optional): ")
-            tags = input("Enter tags (CSV, e.g. 'maduro,box-press') (optional): ")
             
-            AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags)
+            #brand
+            while True:
+                brand = input("Enter brand: ")
+                if is_valid_string(brand):
+                    print(f"Valid brand entered: {brand}")
+                    break
+                else:
+                    print("Invalid brand. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+            
+            #line
+            while True:
+                line = input("Enter line: ")
+                if is_valid_string(line):
+                    print(f"Valid line entered: {line}")
+                    break
+                else:
+                    print("Invalid line. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+
+            #vitola
+            while True:
+                vitola = input("Enter vitola: ")
+                if is_valid_string(vitola):
+                    print(f"Valid vitola entered: {vitola}")
+                    break
+                else:
+                    print("Invalid vitola. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+            
+            #ring_gauge
+            while True:
+                ring_gauge = input("Enter ring gauge (in mm): ")
+                if is_valid_integer(ring_gauge):
+                    print(f"Valid ring gauge entered: {ring_gauge}")
+                    break
+                else:
+                    print("Invalid ring gauge. Please enter a valid integer (e.g., 50).")
+            
+            #country
+            while True:
+                country = input("Enter country: ")
+                if is_valid_string(country):
+                    print(f"Valid country entered: {country}")
+                    break
+                else:
+                    print("Invalid country. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+            
+            #wrappper
+            while True:
+                wrapper = input("Enter wrapper (optional): ")
+                if wrapper == "" or is_valid_string(wrapper):
+                    print(f"Valid wrapper entered: {wrapper}")
+                    break
+                else:
+                    print("Invalid wrapper. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+
+            #binder
+            while True:
+                binder = input("Enter binder (optional): ")
+                if binder == "" or is_valid_string(binder):
+                    print(f"Valid binder entered: {binder}")
+                    break
+                else:
+                    print("Invalid binder. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+            
+
+            #filler
+            while True:
+                filler = input("Enter filler (optional): ")
+                if filler == "" or is_valid_string(filler):
+                    print(f"Valid filler entered: {filler}")
+                    break
+                else:
+                    print("Invalid filler. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+            
+            
+            #date_smoked = input("Enter date smoked (YYYY-MM-DD): ")
+            while True:
+                date_smoked = input("Enter date smoked (YYYY-MM-DD): ")
+                if is_valid_date(date_smoked):
+                    print(f"Valid date entered: {date_smoked}")
+                    break
+                else:
+                    print("Invalid date. Please use YYYY-MM-DD format (e.g., 2025-09-09).")
+
+            #rating
+            while True:
+                rating = input("Enter rating (1-5): ")
+                if is_valid_integer(rating) and 1 <= int(rating) <= 5:
+                    print(f"Valid rating entered: {rating}")
+                    break
+                else:
+                    print("Invalid rating. Please enter an integer between 1 and 5.")
+            
+            #notes
+            while True:
+                notes = input("Enter notes (optional): ")
+                if notes == "" or is_valid_string(notes):
+                    print(f"Valid notes entered: {notes}")
+                    break
+                else:
+                    print("Invalid notes. Please use only letters, numbers, spaces, hyphens, and apostrophes.")
+
+            #price
+            while True:
+                price_cents = input("Enter price in cents (optional): ")
+                if price_cents == "" or (is_valid_integer(price_cents) and int(price_cents) >= 0):
+                    print(f"Valid price entered: {price_cents}")
+                    break
+                else:
+                    print("Invalid price. Please enter a non-negative integer (e.g., 500 for $5.00) or leave blank.")
+
+            #humidor
+            while True:
+                humidor = input("Enter humidor location (optional): ")
+                if humidor == "" or is_valid_string(humidor):
+                    print(f"Valid humidor location entered: {humidor}")
+                    break
+                else:
+                    print("Invalid humidor location. Please use only letters, numbers, spaces, hyphens, and apostrophes.")  
+            
+            #tags
+            while True:
+                tags = input("Enter tags (CSV, e.g. 'maduro,box-press') (optional): ")
+                if tags == "" or all(is_valid_string(tag.strip()) for tag in tags.split(',')):
+                    print(f"Valid tags entered: {tags}")
+                    break
+                else:
+                    print("Invalid tags. Please use only letters, numbers, spaces, hyphens, and apostrophes in each tag, separated by commas.")
+            
+            try:
+                AddCigarReview(brand, line, vitola, ring_gauge, country, wrapper, binder, filler, date_smoked, rating, notes, price_cents, humidor, tags)
+            except Exception as e:
+                print(f"Error adding review: {e}")
+                continue    
 
             print(f"Review for {brand, line, vitola} added successfully!")   
 
@@ -83,9 +202,6 @@ def main_menu():
         elif choice == '4':
             print("You selected Option 4 to Query Reviews")
             print("Feature not implemented yet. Stay tuned!")
-
-
-
 
         elif choice == '5':
             print("Option 5 Fancy Report")
